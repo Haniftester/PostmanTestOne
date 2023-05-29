@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "3b76f5ab-43d5-4461-951f-36cf25e341dc",
+		"name": "Session10",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16018854",
+		"_collection_link": "https://www.postman.com/solar-shuttle-311157/workspace/practiceworkspace/collection/16018854-3b76f5ab-43d5-4461-951f-36cf25e341dc?action=share&creator=16018854&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "GetReq",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData=pm.response.json();\r",
+							"\r",
+							"pm.test(\"script1\",function(){\r",
+							"    console.log(jsonData.data[1].avatar);\r",
+							"    pm.expect(jsonData.data[1].avatar).to.eql(\"https://reqres.in/img/faces/2-image.jpg\");\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Count and log ids\",function(){\r",
+							"    console.log('Total Ids :',jsonData.data.length);\r",
+							"\r",
+							"    for(var id=0;id<jsonData.data.length;id++){\r",
+							"    console.log(jsonData.data[id].id);\r",
+							"    console.log(jsonData.data[id].first_name,jsonData.data[id].last_name);\r",
+							"    //console.log(jsonData.data[id].last_name);\r",
+							"    }\r",
+							"     \r",
+							"    \r",
+							"\r",
+							"   // pm.expect(jsonData.data[1].avatar).to.eql(\"https://reqres.in/img/faces///2-image.jpg\");\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOrder",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\": \"{{OrderId}}\",\r\n    \"products\": [\r\n{\r\n     \"quantity\": 10,\r\n     \"productId\": 311\r\n}, \r\n{\r\n     \"quantity\": 50,\r\n     \"productId\": 312\r\n},\r\n{\r\n     \"quantity\": 12,\r\n     \"productId\": 316\r\n}    \r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://httpbin.org/post",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOrderId",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"OrderId\",jsonData.uuid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://httpbin.org/uuid",
+					"protocol": "http",
+					"host": [
+						"httpbin",
+						"org"
+					],
+					"path": [
+						"uuid"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
